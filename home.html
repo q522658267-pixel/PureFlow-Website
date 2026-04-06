@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Type - PureFlow Air Purifiers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: #333; line-height: 1.6; overflow-x: hidden; }
+
+        /* Navigation - match index.html style */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+            display: flex; justify-content: space-between; align-items: center; height: 80px;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 70px; width: auto; }
+        .nav-menu { display: flex; list-style: none; gap: 50px; }
+        .nav-menu li { position: relative; }
+        .nav-menu a {
+            text-decoration: none; color: #333; font-weight: 500; font-size: 15px;
+            transition: color 0.3s; padding: 10px 0; display: block;
+        }
+        .nav-menu a:hover { color: #0066cc; }
+        .dropdown {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            background: white; min-width: 220px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border-radius: 8px; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+            padding: 15px 0; margin-top: 10px;
+        }
+        .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; }
+        .dropdown a { padding: 12px 25px; font-size: 14px; color: #555; transition: all 0.2s; }
+        .dropdown a:hover { background: #f8f9fa; color: #0066cc; }
+        .mobile-menu-btn { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 10px; }
+        .mobile-menu-btn span { width: 25px; height: 2px; background: #333; transition: all 0.3s; }
+
+        /* Page Banner */
+        .page-banner {
+            width: 100%; height: 400px; position: relative; overflow: hidden;
+            margin-top: 80px;
+        }
+        .page-banner img {
+            width: 100%; height: 100%; object-fit: cover;
+            transform: scale(1.05);
+            animation: bannerZoom 20s ease-in-out infinite alternate;
+        }
+        @keyframes bannerZoom {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1.15); }
+        }
+        .page-banner .banner-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(0,50,100,0.7) 0%, rgba(0,102,204,0.4) 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .page-banner .banner-overlay h1 {
+            font-size: 52px; font-weight: 700; color: #fff; letter-spacing: 2px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        .page-banner .banner-overlay p {
+            font-size: 18px; color: rgba(255,255,255,0.85); margin-top: 12px;
+            font-weight: 300; letter-spacing: 1px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-bar {
+            max-width: 1400px; margin: 0 auto; padding: 20px 40px;
+            font-size: 14px; color: #999;
+        }
+        .breadcrumb-bar a { color: #999; text-decoration: none; transition: color 0.3s; }
+        .breadcrumb-bar a:hover { color: #0066cc; }
+        .breadcrumb-bar span { margin: 0 8px; color: #ccc; }
+
+        /* Category Intro */
+        .category-intro {
+            max-width: 900px; margin: 0 auto; padding: 40px 40px 10px; text-align: center;
+        }
+        .category-intro h2 {
+            font-size: 28px; font-weight: 600; color: #222; margin-bottom: 16px;
+            position: relative; display: inline-block;
+        }
+        .category-intro h2::after {
+            content: ''; display: block; width: 50px; height: 3px;
+            background: #0066cc; margin: 12px auto 0; border-radius: 2px;
+        }
+        .category-intro p {
+            font-size: 16px; color: #777; line-height: 1.8; margin-top: 12px;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            max-width: 1400px; margin: 40px auto 0; padding: 0 40px;
+            display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 24px; border: 1.5px solid #e0e0e0; background: transparent;
+            border-radius: 25px; font-size: 14px; font-weight: 500; color: #666;
+            cursor: pointer; transition: all 0.3s; font-family: 'Montserrat', sans-serif;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            border-color: #0066cc; color: #0066cc; background: rgba(0,102,204,0.05);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            max-width: 1400px; margin: 40px auto 0; padding: 0 40px 80px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+        }
+        .product-card {
+            background: #fff; border-radius: 16px; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer; text-decoration: none; color: inherit; display: block;
+            border: 1px solid #f0f0f0;
+            opacity: 0; transform: translateY(30px);
+            animation: cardFadeIn 0.6s ease-out forwards;
+        }
+        @keyframes cardFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+            border-color: transparent;
+        }
+        .product-card .card-img {
+            height: 300px; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+            overflow: hidden; position: relative;
+        }
+        .product-card .card-img img {
+            max-width: 80%; max-height: 80%; object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.1));
+        }
+        .product-card:hover .card-img img { transform: scale(1.1) translateY(-5px); }
+        .product-card .card-info { padding: 24px 24px 28px; text-align: center; }
+        .product-card .card-badge {
+            display: inline-block; padding: 4px 14px; background: #eef5ff;
+            color: #0066cc; font-size: 12px; font-weight: 600; border-radius: 20px;
+            margin-bottom: 12px; letter-spacing: 0.5px;
+        }
+        .product-card .card-info h3 {
+            font-size: 17px; font-weight: 600; color: #222; margin-bottom: 6px;
+            transition: color 0.3s;
+        }
+        .product-card:hover .card-info h3 { color: #0066cc; }
+        .product-card .card-info p { font-size: 13px; color: #aaa; margin-bottom: 18px; }
+        .product-card .view-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 9px 24px; border: 1.5px solid #0066cc; color: #0066cc;
+            font-size: 13px; font-weight: 500; border-radius: 25px;
+            transition: all 0.3s; text-decoration: none;
+        }
+        .product-card .view-btn svg { transition: transform 0.3s; }
+        .product-card:hover .view-btn { background: #0066cc; color: #fff; }
+        .product-card:hover .view-btn svg { transform: translateX(3px); }
+
+        /* Features Section */
+        .features-section {
+            background: #f8fafc; padding: 80px 40px;
+            border-top: 1px solid #eee;
+        }
+        .features-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+        }
+        .feature-item { text-align: center; }
+        .feature-icon {
+            width: 72px; height: 72px; border-radius: 20px; margin: 0 auto 18px;
+            background: linear-gradient(135deg, #0066cc 0%, #00a0ff 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .feature-icon svg { width: 32px; height: 32px; color: #fff; }
+        .feature-item h4 { font-size: 16px; font-weight: 600; color: #222; margin-bottom: 8px; }
+        .feature-item p { font-size: 14px; color: #888; line-height: 1.6; }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #003366 0%, #0066cc 100%);
+            padding: 80px 40px; text-align: center; position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .cta-section h2 {
+            font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 16px;
+            position: relative;
+        }
+        .cta-section p {
+            font-size: 17px; color: rgba(255,255,255,0.8); margin-bottom: 36px;
+            position: relative;
+        }
+        .cta-btn {
+            display: inline-block; padding: 14px 40px;
+            background: #fff; color: #0066cc; font-size: 15px; font-weight: 600;
+            border-radius: 30px; text-decoration: none; transition: all 0.3s;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2); position: relative;
+        }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px;
+            background: #0066cc; color: #fff; border: none; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 999;
+            box-shadow: 0 4px 15px rgba(0,102,204,0.4);
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-3px); background: #0052a3; }
+        .back-to-top svg { width: 20px; height: 20px; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        }
+        @media (max-width: 1024px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .product-grid { grid-template-columns: 1fr; max-width: 500px; }
+            .page-banner { height: 280px; margin-top: 80px; }
+            .page-banner .banner-overlay h1 { font-size: 32px; }
+            .page-banner .banner-overlay p { font-size: 15px; }
+            .breadcrumb-bar { padding: 15px 20px; }
+            .category-intro { padding: 30px 20px 10px; }
+            .category-intro h2 { font-size: 24px; }
+            .filter-bar { padding: 0 20px; }
+            .features-grid { grid-template-columns: 1fr; gap: 30px; }
+            .cta-section h2 { font-size: 26px; }
+            .footer-container { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="generated-images/PureFlow_Logo_transparent_bc68c45a.png" alt="PureFlow">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li>
+                    <a href="products.html">Products</a>
+                    <div class="dropdown">
+                        <a href="products.html">All Products</a>
+                        <a href="products.html#home">Home Type</a>
+                        <a href="products.html#store">Store Type</a>
+                        <a href="products.html#commercial">Commercial Type</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="about.html">About Us</a>
+                    <div class="dropdown">
+                        <a href="about.html">Company Profile</a>
+                        <a href="about.html#honors">Company Honors</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Banner -->
+    <div class="page-banner">
+        <img src="assets/images/home_banner.jpg" alt="Home Type Air Purifiers">
+        <div class="banner-overlay">
+            <h1>Home Type</h1>
+            <p>Premium air purification for your living space</p>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="products.html">Products</a>
+        <span>/</span>
+        Home Type
+    </div>
+
+    <!-- Category Intro -->
+    <div class="category-intro">
+        <h2>Designed for Home Living</h2>
+        <p>Our Home Type air purifiers combine elegant design with powerful filtration technology. From compact mini units perfect for personal spaces to high-capacity models for large living rooms, each purifier is engineered to deliver clean, fresh air while seamlessly blending into your home decor.</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterProducts('all', this)">All Models</button>
+        <button class="filter-btn" onclick="filterProducts('large', this)">30-45 m²</button>
+        <button class="filter-btn" onclick="filterProducts('medium', this)">28-35 m²</button>
+        <button class="filter-btn" onclick="filterProducts('mini', this)">Mini 8-10 m²</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid">
+        <!-- P285W -->
+        <a href="p285w.html" class="product-card" data-size="medium" style="animation-delay: 0s">
+            <div class="card-img">
+                <img src="assets/images/home_p285w.png" alt="Pet Air Purifier P285W" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">30-35 m²</div>
+                <h3>Pet Air Purifier P285W</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- P280W -->
+        <a href="p280w.html" class="product-card" data-size="medium" style="animation-delay: 0.08s">
+            <div class="card-img">
+                <img src="assets/images/home_p280w.png" alt="Pet Air Purifier P280W" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">30-35 m²</div>
+                <h3>Pet Air Purifier P280W</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- P290W -->
+        <a href="p290w.html" class="product-card" data-size="medium" style="animation-delay: 0.16s">
+            <div class="card-img">
+                <img src="assets/images/home_p290w.png" alt="Pet Air Purifier P290W" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">30-35 m²</div>
+                <h3>Pet Air Purifier P290W</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- C07 -->
+        <a href="c07.html" class="product-card" data-size="large" style="animation-delay: 0.24s">
+            <div class="card-img">
+                <img src="assets/images/home_c07.png" alt="Pet Air Purifier C07" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">35-45 m²</div>
+                <h3>Pet Air Purifier C07</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- C06 -->
+        <a href="c06.html" class="product-card" data-size="large" style="animation-delay: 0.32s">
+            <div class="card-img">
+                <img src="assets/images/home_c06.png" alt="Pet Air Purifier C06" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">35-45 m²</div>
+                <h3>Pet Air Purifier C06</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- C05 -->
+        <a href="c05.html" class="product-card" data-size="large" style="animation-delay: 0.4s">
+            <div class="card-img">
+                <img src="assets/images/home_c05.png" alt="Pet Air Purifier C05" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">35-45 m²</div>
+                <h3>Pet Air Purifier C05</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- A07 -->
+        <a href="a07.html" class="product-card" data-size="medium" style="animation-delay: 0.48s">
+            <div class="card-img">
+                <img src="assets/images/home_a07.png" alt="Pet Air Purifier A07" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">28-35 m²</div>
+                <h3>Pet Air Purifier A07</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- A06 -->
+        <a href="a06.html" class="product-card" data-size="medium" style="animation-delay: 0.56s">
+            <div class="card-img">
+                <img src="assets/images/home_a06.png" alt="Pet Air Purifier A06" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">28-35 m²</div>
+                <h3>Pet Air Purifier A06</h3>
+                <p>Household Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+        <!-- KJ065A -->
+        <a href="kj065a.html" class="product-card" data-size="mini" style="animation-delay: 0.64s">
+            <div class="card-img">
+                <img src="assets/images/home_kj065a.png" alt="Pet Air Purifier KJ065A" loading="lazy">
+            </div>
+            <div class="card-info">
+                <div class="card-badge">8-10 m²</div>
+                <h3>Pet Air Purifier KJ065A</h3>
+                <p>Mini Pet Air Purifier</p>
+                <span class="view-btn">View Details <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+        </a>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h4>Multi-Layer Filtration</h4>
+                <p>Advanced HEPA + activated carbon filters capture 99.97% of airborne particles</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                </div>
+                <h4>Smart Sensor</h4>
+                <p>Real-time air quality monitoring with automatic speed adjustment</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </div>
+                <h4>Ultra Quiet</h4>
+                <p>Whisper-quiet operation as low as 20dB for undisturbed sleep</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </div>
+                <h4>Pet-Friendly Design</h4>
+                <p>Specially designed to neutralize pet dander, odors and allergens</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <h2>Need Help Choosing the Right Model?</h2>
+        <p>Our team of experts is ready to help you find the perfect air purifier for your space.</p>
+        <a href="contact.html" class="cta-btn">Contact Us</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="generated-images/PureFlow_Logo_transparent_bc68c45a.png" alt="PureFlow">
+                <p>PureFlow is a professional air purifier manufacturer dedicated to creating clean and healthy environments for homes, businesses, and industries worldwide.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Products</h4>
+                <ul>
+                    <li><a href="products.html#home">Home Type</a></li>
+                    <li><a href="products.html#store">Store Type</a></li>
+                    <li><a href="products.html#commercial">Commercial Type</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="about.html#honors">Company Honors</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Add: No.802, Building 1, South Guotai Road, Daliang Town, Shunde, Foshan, Guangdong, China</li>
+                    <li>Email: marketing@focuseetech.com</li>
+                    <li>Mobile/WhatsApp: 86 13425651968</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PureFlow. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
+    <script>
+        // Filter products
+        function filterProducts(size, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.product-card').forEach(card => {
+                const cardSize = card.dataset.size;
+                if (size === 'all' || cardSize === size) {
+                    card.style.display = 'block';
+                    card.style.animation = 'none';
+                    card.offsetHeight; // reflow
+                    card.style.animation = 'cardFadeIn 0.6s ease-out forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Back to top visibility
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        if (menuBtn && navMenu) {
+            menuBtn.addEventListener('click', () => {
+                navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                navMenu.style.flexDirection = 'column';
+                navMenu.style.position = 'absolute';
+                navMenu.style.top = '80px';
+                navMenu.style.left = '0';
+                navMenu.style.right = '0';
+                navMenu.style.background = '#fff';
+                navMenu.style.padding = '20px';
+                navMenu.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                navMenu.style.gap = '15px';
+            });
+        }
+    </script>
+</body>
+</html>

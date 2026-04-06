@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureFlow - Professional Air Purifier Manufacturer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: #333; line-height: 1.6; overflow-x: hidden; }
+
+        /* ========== Navigation ========== */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: transparent; transition: all 0.3s ease; }
+        .navbar.scrolled { background: #ffffff; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 90px; width: auto; }
+        .nav-menu { display: flex; list-style: none; gap: 50px; }
+        .nav-menu li { position: relative; }
+        .nav-menu a { text-decoration: none; color: #fff; font-weight: 500; font-size: 15px; transition: color 0.3s; padding: 10px 0; display: block; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+        .navbar.scrolled .nav-menu a { color: #333; text-shadow: none; }
+        .nav-menu a:hover { color: #fff; }
+        .navbar.scrolled .nav-menu a:hover { color: #0066cc; }
+        .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; min-width: 220px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-radius: 8px; opacity: 0; visibility: hidden; transition: all 0.3s ease; padding: 15px 0; margin-top: 10px; }
+        .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; }
+        .dropdown a { padding: 12px 25px; font-size: 14px; color: #555; transition: all 0.2s; }
+        .dropdown a:hover { background: #f8f9fa; color: #0066cc; }
+        .mobile-menu-btn { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 10px; }
+        .mobile-menu-btn span { width: 25px; height: 2px; background: #333; transition: all 0.3s; }
+
+        /* ========== Hero Banner Carousel ========== */
+        .hero-carousel { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .carousel-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
+        .carousel-slide.active { opacity: 1; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #333; transition: all 0.3s; z-index: 10; }
+        .carousel-arrow:hover { background: white; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .carousel-arrow.prev { left: 30px; }
+        .carousel-arrow.next { right: 30px; }
+        .carousel-dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 10; }
+        .carousel-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); border: 2px solid transparent; cursor: pointer; transition: all 0.3s; }
+        .carousel-dot.active { background: white; border-color: #0066cc; transform: scale(1.2); }
+
+        /* ========== Brand Video Section ========== */
+        .video-section { padding: 0; background: #fff; }
+        .video-container { max-width: 100%; margin: 0 auto; }
+        .video-container video { width: 100%; display: block; }
+
+        /* ========== New Product Section ========== */
+        .newproduct-section { padding: 40px 0 0; background: #f8f9fa; }
+        .newproduct-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        .newproduct-container img { width: 100%; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); transition: transform 0.5s; }
+        .newproduct-container img:hover { transform: scale(1.02); }
+
+        /* ========== Hot Product / Technology Section ========== */
+        .hotproduct-section { padding: 80px 0; background: #f8f9fa; }
+        .hotproduct-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; gap: 0; overflow: hidden; }
+        .hotproduct-images { width: 50%; position: relative; overflow: hidden; }
+        .hotproduct-images img { width: 100%; display: block; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.8s ease; }
+        .hotproduct-images img.active { opacity: 1; }
+        .hotproduct-text { width: 50%; display: flex; align-items: center; padding: 60px 80px; }
+        .hotproduct-text h5 { font-size: 28px; font-weight: 600; color: #1a1a1a; line-height: 1.4; margin-bottom: 24px; }
+        .hotproduct-text p { font-size: 15px; color: #666; line-height: 2; margin-bottom: 8px; }
+        .hotproduct-text a.learn-more { display: inline-block; margin-top: 30px; padding: 12px 36px; border: 2px solid #0066cc; color: #0066cc; font-weight: 600; font-size: 15px; text-decoration: none; border-radius: 30px; transition: all 0.3s; }
+        .hotproduct-text a.learn-more:hover { background: #0066cc; color: #fff; }
+
+        /* ========== Patent Certification Section ========== */
+        .patent-section { padding: 80px 0; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .patent-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        .patent-header { text-align: center; margin-bottom: 20px; }
+        .patent-header h5 { font-size: 36px; font-weight: 700; margin-bottom: 16px; }
+        .patent-header p { font-size: 16px; color: rgba(255,255,255,0.7); max-width: 900px; margin: 0 auto; line-height: 1.8; }
+        .patent-tabs { display: flex; justify-content: center; gap: 20px; margin: 40px 0 50px; }
+        .patent-tab { padding: 12px 36px; background: transparent; border: 2px solid rgba(255,255,255,0.3); color: white; font-size: 15px; font-weight: 500; cursor: pointer; border-radius: 30px; transition: all 0.3s; font-family: 'Montserrat', sans-serif; }
+        .patent-tab.active, .patent-tab:hover { background: #0066cc; border-color: #0066cc; }
+        .patent-carousel { position: relative; padding: 0 50px; }
+        .patent-track { display: flex; gap: 30px; overflow: hidden; justify-content: center; flex-wrap: wrap; }
+        .patent-card { width: 240px; background: rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; transition: all 0.4s; }
+        .patent-card:hover { transform: translateY(-8px); background: rgba(255,255,255,0.15); }
+        .patent-card img { width: 100%; height: 340px; object-fit: contain; background: white; padding: 20px; }
+        .patent-card .label { text-align: center; padding: 16px; font-size: 14px; color: rgba(255,255,255,0.8); }
+
+        /* ========== Company News Section ========== */
+        .news-section { padding: 80px 0; background: #fff; }
+        .news-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
+        .news-section-title { font-size: 32px; font-weight: 700; color: #1a1a1a; margin-bottom: 40px; text-align: center; }
+        .news-layout { display: flex; gap: 50px; align-items: stretch; }
+        .news-main { width: 45%; flex-shrink: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: transform 0.3s; }
+        .news-main:hover { transform: translateY(-5px); }
+        .news-main img { width: 100%; height: 260px; object-fit: cover; display: block; }
+        .news-main .news-body { padding: 24px; }
+        .news-main .news-body h5 { font-size: 17px; font-weight: 600; color: #1a1a1a; margin-bottom: 10px; line-height: 1.4; }
+        .news-main .news-body p { font-size: 14px; color: #888; line-height: 1.7; margin-bottom: 12px; }
+        .news-main .news-body .date { font-size: 13px; color: #bbb; }
+        .news-list { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0; }
+        .news-list li { list-style: none; border-bottom: 1px solid #eee; }
+        .news-list li:last-child { border-bottom: none; }
+        .news-list li a { display: flex; align-items: center; gap: 12px; padding: 18px 0; text-decoration: none; color: #333; font-size: 15px; transition: color 0.3s; line-height: 1.5; }
+        .news-list li a::before { content: ''; width: 6px; height: 6px; background: #0066cc; border-radius: 50%; flex-shrink: 0; }
+        .news-list li a:hover { color: #0066cc; }
+
+        /* Industry news reverse layout */
+        .news-section.reverse { background: #f8f9fa; }
+        .news-section.reverse .news-layout { flex-direction: row-reverse; }
+
+        /* ========== Footer ========== */
+        .footer { background: #0a0a0a; color: white; padding: 80px 0 30px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; }
+        .footer-brand img { height: 50px; margin-bottom: 20px; }
+        .footer-brand p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.8; }
+        .footer-column h4 { font-size: 18px; font-weight: 600; margin-bottom: 25px; color: white; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 12px; }
+        .footer-column a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 15px; transition: color 0.3s; }
+        .footer-column a:hover { color: #0066cc; }
+        .footer-bottom { max-width: 1400px; margin: 60px auto 0; padding: 30px 40px 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 14px; }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .hotproduct-container { flex-direction: column; }
+            .hotproduct-images { width: 100%; height: 400px; }
+            .hotproduct-text { width: 100%; padding: 40px; }
+            .footer-container { grid-template-columns: repeat(2, 1fr); }
+            .news-layout { flex-direction: column !important; }
+            .news-main { width: 100%; }
+        }
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .patent-track { flex-direction: column; align-items: center; }
+            .patent-card { width: 90%; }
+            .footer-container { grid-template-columns: 1fr; gap: 40px; }
+            .patent-section { padding: 60px 0; }
+            .news-section { padding: 60px 0; }
+            .hotproduct-text { padding: 30px; }
+            .hotproduct-text h5 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="generated-images/PureFlow_Logo_transparent_bc68c45a.png" alt="PureFlow">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li>
+                    <a href="products.html">Products</a>
+                    <div class="dropdown">
+                        <a href="products.html">All Products</a>
+                        <a href="home.html">Home Type</a>
+                        <a href="store.html">Store Type</a>
+                        <a href="commercial.html">Commercial Type</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="about.html">About Us</a>
+                    <div class="dropdown">
+                        <a href="about.html">Company Profile</a>
+                        <a href="about.html#honors">Company Honors</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Banner Carousel -->
+    <section class="hero-carousel">
+        <div class="carousel-slide active">
+            <img src="assets/images/homepage/banner_01.jpg" alt="PureFlow Banner 1" onclick="window.location.href='p285w.html'">
+        </div>
+        <div class="carousel-slide">
+            <img src="assets/images/homepage/banner_02.jpg" alt="PureFlow Banner 2" onclick="window.location.href='p290w.html'">
+        </div>
+        <div class="carousel-slide">
+            <img src="assets/images/homepage/banner_03.jpg" alt="PureFlow Banner 3" onclick="window.location.href='p285w.html'">
+        </div>
+        <div class="carousel-slide">
+            <img src="assets/images/homepage/banner_04.jpg" alt="PureFlow Banner 4">
+        </div>
+        <div class="carousel-slide">
+            <img src="assets/images/homepage/banner_05.jpg" alt="PureFlow Banner 5">
+        </div>
+        <div class="carousel-slide">
+            <img src="assets/images/homepage/banner_06.jpg" alt="PureFlow Banner 6">
+        </div>
+        <button class="carousel-arrow prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="carousel-arrow next" onclick="changeSlide(1)">&#10095;</button>
+        <div class="carousel-dots">
+            <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+            <span class="carousel-dot" onclick="goToSlide(1)"></span>
+            <span class="carousel-dot" onclick="goToSlide(2)"></span>
+            <span class="carousel-dot" onclick="goToSlide(3)"></span>
+            <span class="carousel-dot" onclick="goToSlide(4)"></span>
+            <span class="carousel-dot" onclick="goToSlide(5)"></span>
+        </div>
+    </section>
+
+    <!-- 2. Brand Video -->
+    <section class="video-section">
+        <div class="video-container">
+            <video controls muted autoplay loop>
+                <source src="assets/images/homepage/brand_video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <!-- 3. New Product Showcase -->
+    <section class="newproduct-section">
+        <div class="newproduct-container">
+            <a href="p285w.html">
+                <img src="assets/images/homepage/new_product.jpg" alt="New Product Pet Air Purifier P285W">
+            </a>
+        </div>
+    </section>
+
+    <!-- 4. Hot Product Technology -->
+    <section class="hotproduct-section">
+        <div class="hotproduct-container">
+            <div class="hotproduct-images" id="hotImages">
+                <img class="active" src="assets/images/homepage/tech_01.jpg" alt="Pet Purification Technology 1">
+                <img src="assets/images/homepage/tech_02.jpg" alt="Pet Purification Technology 2">
+                <img src="assets/images/homepage/tech_03.jpg" alt="Pet Purification Technology 3">
+            </div>
+            <div class="hotproduct-text">
+                <div>
+                    <h5>Safe, environmentally friendly, and naturally clean</h5>
+                    <p>Biological composite enzyme deodorization technology effectively decomposes odor molecules</p>
+                    <p>True decomposition without masking</p>
+                    <p>Four step decomposition of pet odor</p>
+                    <a href="products.html" class="learn-more">Learn More+</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Patent Certification -->
+    <section class="patent-section">
+        <div class="patent-container">
+            <div class="patent-header">
+                <h5>Patent certification</h5>
+                <p>Our company has passed tests in multiple national laboratories such as ISO9001, ISO13485, ISO10012, BSCI, EPA, SGS, etc. Most of our products have obtained CE, CB, ROHS, ETL, CETL, FCC certifications, which can meet the requirements of different countries.</p>
+            </div>
+            <div class="patent-tabs">
+                <button class="patent-tab active" onclick="switchPatentTab('patent', this)">Product Patent</button>
+                <button class="patent-tab" onclick="switchPatentTab('cert', this)">Product Certification</button>
+            </div>
+            <!-- Patent Tab -->
+            <div class="patent-carousel" id="patentTab">
+                <div class="patent-track">
+                    <div class="patent-card"><img src="assets/images/homepage/patent_01.jpg" alt="Patent 1"><div class="label">Utility Model Patent</div></div>
+                    <div class="patent-card"><img src="assets/images/homepage/patent_02.jpg" alt="Patent 2"><div class="label">Design Patent</div></div>
+                    <div class="patent-card"><img src="assets/images/homepage/patent_03.jpg" alt="Patent 3"><div class="label">Invention Patent</div></div>
+                    <div class="patent-card"><img src="assets/images/homepage/patent_04.jpg" alt="Patent 4"><div class="label">Technology Patent</div></div>
+                    <div class="patent-card"><img src="assets/images/homepage/patent_05.jpg" alt="Patent 5"><div class="label">Product Patent</div></div>
+                </div>
+            </div>
+            <!-- Certification Tab -->
+            <div class="patent-carousel" id="certTab" style="display: none;">
+                <div class="patent-track">
+                    <div class="patent-card"><img src="assets/images/homepage/cert_01.jpg" alt="Certification 1"><div class="label">Quality Certification</div></div>
+                    <div class="patent-card"><img src="assets/images/homepage/cert_02.jpg" alt="Certification 2"><div class="label">Safety Certification</div></div>
+                    <div class="patent-card"><img src="assets/images/homepage/cert_03.jpg" alt="Certification 3"><div class="label">International Standard</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Company News -->
+    <section class="news-section">
+        <div class="news-container">
+            <div class="news-section-title">Company News</div>
+            <div class="news-layout">
+                <div class="news-main">
+                    <img src="assets/images/homepage/news_mayday.jpg" alt="May Day News">
+                    <div class="news-body">
+                        <h5>Happy May Day International Labor Day! PureFlow Health Technology Helps Pet Families</h5>
+                        <p>With the arrival of the May Day International Labor Day, Foshan PureFlow Health Technology Co., Ltd. brings a special holiday gift to pet families - a pet air purifier designed for healthier homes.</p>
+                        <div class="date">2024-04-30</div>
+                    </div>
+                </div>
+                <div class="news-list">
+                    <ul>
+                        <li><a href="#">Foshan PureFlow Health Technology Co., Ltd. Successfully Passes ISO9001 System Audit</a></li>
+                        <li><a href="#">Happy May Day International Labor Day! PureFlow Health Technology Helps Pet Families</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Industry Information -->
+    <section class="news-section reverse">
+        <div class="news-container">
+            <div class="news-section-title">Industry information</div>
+            <div class="news-layout">
+                <div class="news-main">
+                    <img src="assets/images/homepage/news_market.jpg" alt="Market News">
+                    <div class="news-body">
+                        <h5>Pet Air Purifier Market Soars as Pet Ownership Increases Globally</h5>
+                        <p>The global pet air purifier market is experiencing a significant surge in demand, fueled by the growing trend of pet ownership and the increasing awareness of indoor air quality among pet parents. With the rise of the pet economy and the shift towards high-quality pet care, pet air purifiers have emerged as a must-have product for many households with pets.</p>
+                        <div class="date">2024-08-03</div>
+                    </div>
+                </div>
+                <div class="news-list">
+                    <ul>
+                        <li><a href="#">Pet Air Purifier Market Soars as Pet Ownership Increases Globally</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="generated-images/PureFlow_Logo_transparent_bc68c45a.png" alt="PureFlow">
+                <p>PureFlow is a professional air purifier manufacturer dedicated to creating clean and healthy environments for homes, businesses, and industries worldwide.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Products</h4>
+                <ul>
+                    <li><a href="home.html">Home Type</a></li>
+                    <li><a href="store.html">Store Type</a></li>
+                    <li><a href="commercial.html">Commercial Type</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="about.html#honors">Company Honors</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Foshan, Guangdong, China</li>
+                    <li>marketing@focuseetech.com</li>
+                    <li>Mobile/WhatsApp: 86 13425651968</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PureFlow. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Banner Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((s, i) => s.classList.toggle('active', i === index));
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        }
+        function changeSlide(dir) {
+            currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+        function goToSlide(index) {
+            currentSlide = index;
+            showSlide(currentSlide);
+        }
+        setInterval(() => changeSlide(1), 4000);
+
+        // Hot Product Image Rotation
+        let hotIdx = 0;
+        const hotImgs = document.querySelectorAll('#hotImages img');
+        setInterval(() => {
+            hotImgs[hotIdx].classList.remove('active');
+            hotIdx = (hotIdx + 1) % hotImgs.length;
+            hotImgs[hotIdx].classList.add('active');
+        }, 5000);
+
+        // Patent Tab Switch
+        function switchPatentTab(tab, btn) {
+            document.querySelectorAll('.patent-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('patentTab').style.display = tab === 'patent' ? 'block' : 'none';
+            document.getElementById('certTab').style.display = tab === 'cert' ? 'block' : 'none';
+        }
+
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+        window.dispatchEvent(new Event('scroll'));
+
+        // Mobile menu
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                const isHidden = navMenu.style.display === 'none' || !navMenu.style.display;
+                navMenu.style.display = isHidden ? 'flex' : 'none';
+                if (isHidden) {
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.position = 'absolute';
+                    navMenu.style.top = '80px';
+                    navMenu.style.left = '0';
+                    navMenu.style.right = '0';
+                    navMenu.style.background = '#fff';
+                    navMenu.style.padding = '20px';
+                    navMenu.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                    navMenu.style.gap = '15px';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

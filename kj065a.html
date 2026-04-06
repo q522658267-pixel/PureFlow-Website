@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Air Purifier KJ065A - PureFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: #333; line-height: 1.6; overflow-x: hidden; }
+
+        /* Navigation */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo img { height: 90px; width: auto; }
+        .nav-menu { display: flex; list-style: none; gap: 50px; }
+        .nav-menu a { text-decoration: none; color: #333; font-weight: 500; font-size: 15px; transition: color 0.3s; padding: 10px 0; display: block; }
+        .nav-menu a:hover { color: #0066cc; }
+        .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: white; min-width: 220px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-radius: 8px; opacity: 0; visibility: hidden; transition: all 0.3s ease; padding: 15px 0; margin-top: 10px; }
+        .nav-menu li { position: relative; }
+        .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; }
+        .dropdown a { padding: 12px 25px; font-size: 14px; color: #555; transition: all 0.2s; }
+        .dropdown a:hover { background: #f8f9fa; color: #0066cc; }
+        .mobile-menu-btn { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 10px; }
+        .mobile-menu-btn span { width: 25px; height: 2px; background: #333; transition: all 0.3s; }
+
+        /* Breadcrumb */
+        .breadcrumb { max-width: 1300px; margin: 100px auto 0; padding: 20px 20px 0; font-size: 14px; color: #999; }
+        .breadcrumb a { color: #999; text-decoration: none; transition: color 0.3s; }
+        .breadcrumb a:hover { color: #0066cc; }
+        .breadcrumb span { margin: 0 8px; }
+
+        /* Product Title */
+        .product-title { text-align: center; padding: 40px 20px 20px; }
+        .product-title h1 { font-size: 36px; font-weight: 700; color: #222; margin-bottom: 10px; }
+        .product-title p { font-size: 16px; color: #888; }
+
+        /* Swiper Carousel */
+        .swiper-section { max-width: 800px; margin: 20px auto 40px; padding: 0 20px; position: relative; }
+        .swiper-main { position: relative; width: 100%; aspect-ratio: 1/1; background: #f8f9fa; border-radius: 12px; overflow: hidden; }
+        .swiper-main img { width: 100%; height: 100%; object-fit: contain; display: none; padding: 40px; }
+        .swiper-main img.active { display: block; }
+        .swiper-nav { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+        .swiper-thumb { width: 80px; height: 80px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; overflow: hidden; background: #f8f9fa; transition: all 0.3s; }
+        .swiper-thumb.active { border-color: #0066cc; }
+        .swiper-thumb img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+        .swiper-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.9); box-shadow: 0 2px 12px rgba(0,0,0,0.1); border: none; cursor: pointer; font-size: 18px; color: #333; display: flex; align-items: center; justify-content: center; z-index: 10; transition: all 0.3s; }
+        .swiper-arrow:hover { background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .swiper-arrow.prev { left: 15px; }
+        .swiper-arrow.next { right: 15px; }
+
+        /* Full-width Product Photos */
+        .product-photos { max-width: 1300px; margin: 0 auto; padding: 0 20px 60px; }
+        .product-photos img { width: 100%; height: auto; display: block; margin-bottom: 0; }
+
+        /* Footer */
+        .footer { background: #0a0a0a; color: white; padding: 80px 0 30px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; }
+        .footer-brand img { height: 50px; margin-bottom: 20px; }
+        .footer-brand p { color: rgba(255,255,255,0.6); font-size: 15px; line-height: 1.8; }
+        .footer-column h4 { font-size: 18px; font-weight: 600; margin-bottom: 25px; color: white; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 12px; }
+        .footer-column a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 15px; transition: color 0.3s; }
+        .footer-column a:hover { color: #0066cc; }
+        .footer-bottom { max-width: 1400px; margin: 60px auto 0; padding: 30px 40px 0; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 14px; }
+
+        @media (max-width: 1024px) { .footer-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .nav-menu { display: none; } .mobile-menu-btn { display: flex; } .product-title h1 { font-size: 26px; } .footer-container { grid-template-columns: 1fr; gap: 40px; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="generated-images/PureFlow_Logo_transparent_bc68c45a.png" alt="PureFlow">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li>
+                    <a href="products.html">Products</a>
+                    <div class="dropdown">
+                        <a href="products.html">All Products</a>
+                        <a href="products.html#home">Home Type</a>
+                        <a href="products.html#store">Store Type</a>
+                        <a href="products.html#commercial">Commercial Type</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="about.html">About Us</a>
+                    <div class="dropdown">
+                        <a href="about.html">Company Profile</a>
+                        <a href="about.html#honors">Company Honors</a>
+                    </div>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="products.html">Products</a> <span>/</span> <a href="products.html#home">Home Type</a> <span>/</span> Pet Air Purifier KJ065A
+    </div>
+
+    <!-- Product Title -->
+    <div class="product-title">
+        <h1>Pet Air Purifier KJ065A</h1>
+        <p>8-10 &#x33A1; Mini pet air purifier</p>
+    </div>
+
+    <!-- Product Carousel -->
+    <div class="swiper-section">
+        <div class="swiper-main" id="swiperMain">
+            <img src="assets/images/sumashi/home_7/17111823488440.png" alt="Pet Air Purifier KJ065A" class="active">
+            <img src="assets/images/sumashi/home_7/171118234884401.png" alt="Pet Air Purifier KJ065A">
+            <img src="assets/images/sumashi/home_7/171118234884402.png" alt="Pet Air Purifier KJ065A">
+            <img src="assets/images/sumashi/home_7/171118234884403.png" alt="Pet Air Purifier KJ065A">
+        </div>
+        <button class="swiper-arrow prev" onclick="slideImage(-1)">&#10094;</button>
+        <button class="swiper-arrow next" onclick="slideImage(1)">&#10095;</button>
+        <div class="swiper-nav" id="swiperNav">
+            <div class="swiper-thumb active" onclick="showSlide(0)"><img src="assets/images/sumashi/home_7/17111823488440.png" alt=""></div>
+            <div class="swiper-thumb" onclick="showSlide(1)"><img src="assets/images/sumashi/home_7/171118234884401.png" alt=""></div>
+            <div class="swiper-thumb" onclick="showSlide(2)"><img src="assets/images/sumashi/home_7/171118234884402.png" alt=""></div>
+            <div class="swiper-thumb" onclick="showSlide(3)"><img src="assets/images/sumashi/home_7/171118234884403.png" alt=""></div>
+        </div>
+    </div>
+
+    <!-- Full-width Photos -->
+    <div class="product-photos">
+        <img src="assets/images/sumashi/home_7/17113348701880.jpg" alt="Pet Air Purifier KJ065A" loading="lazy">
+        <img src="assets/images/sumashi/home_7/171133487018801.jpg" alt="Pet Air Purifier KJ065A" loading="lazy">
+        <img src="assets/images/sumashi/home_7/171133487018802.jpg" alt="Pet Air Purifier KJ065A" loading="lazy">
+        <img src="assets/images/sumashi/home_7/171133487018803.jpg" alt="Pet Air Purifier KJ065A" loading="lazy">
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="generated-images/PureFlow_Logo_transparent_bc68c45a.png" alt="PureFlow">
+                <p>PureFlow is a professional air purifier manufacturer dedicated to creating clean and healthy environments for homes, businesses, and industries worldwide.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Products</h4>
+                <ul>
+                    <li><a href="products.html#home">Home Type</a></li>
+                    <li><a href="products.html#store">Store Type</a></li>
+                    <li><a href="products.html#commercial">Commercial Type</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="about.html#honors">Company Honors</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Add: No.802, Building 1, South Guotai Road, Daliang Town, Shunde, Foshan, Guangdong, China</li>
+                    <li>Email: marketing@focuseetech.com</li>
+                    <li>Mobile/WhatsApp: 86 13425651968</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PureFlow. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#swiperMain img');
+        const thumbs = document.querySelectorAll('#swiperNav .swiper-thumb');
+        const total = slides.length;
+
+        function showSlide(index) {
+            if (index < 0) index = total - 1;
+            if (index >= total) index = 0;
+            currentSlide = index;
+            slides.forEach((s, i) => s.classList.toggle('active', i === index));
+            thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+        }
+
+        function slideImage(dir) { showSlide(currentSlide + dir); }
+
+        thumbs.forEach((t, i) => t.addEventListener('click', () => showSlide(i)));
+
+        // Auto-play
+        setInterval(() => showSlide(currentSlide + 1), 5000);
+    </script>
+</body>
+</html>
