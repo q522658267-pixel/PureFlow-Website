@@ -163,7 +163,18 @@
             .hotproduct-text { padding: 30px; }
             .hotproduct-text h5 { font-size: 22px; }
         }
-    </style>
+
+        /* ========== Nav CTA Button ========== */
+        .nav-cta { background: #0066cc; color: #fff !important; padding: 9px 22px !important; border-radius: 30px !important; font-weight: 600 !important; text-shadow: none !important; transition: all 0.3s !important; white-space: nowrap; }
+        .nav-cta:hover { background: #0052a3 !important; color: #fff !important; transform: scale(1.05); }
+
+        /* ========== CTA Banner Section ========== */
+        .cta-section { background: linear-gradient(135deg, #0066cc 0%, #004a99 100%); padding: 70px 40px; text-align: center; }
+        .cta-section h5 { font-size: 36px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+        .cta-section p { font-size: 18px; color: rgba(255,255,255,0.85); margin-bottom: 36px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-section .cta-btn { display: inline-block; background: #fff; color: #0066cc; padding: 16px 48px; border-radius: 30px; font-size: 17px; font-weight: 700; text-decoration: none; transition: all 0.3s; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+        .cta-section .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -234,6 +245,7 @@
                     </div>
                 </li>
                 <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html" class="nav-cta">Get a Quote</a></li>
             </ul>
             <div class="mobile-menu-btn">
                 <span></span>
@@ -390,6 +402,15 @@
             </div>
         </div>
     </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-section">
+        <h5>Ready to Get Started?</h5>
+        <p>Get a free, no-obligation quote for your air purifier order today. We ship worldwide.</p>
+        <a href="contact.html" class="cta-btn">Get a Free Quote →</a>
+    </section>
+
+
 
     <!-- Footer -->
     <footer class="footer">
